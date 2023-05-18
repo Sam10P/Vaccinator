@@ -24,7 +24,9 @@ public class Dose2 {
     @Column(name = "dose_id")
     String doseId;
 
+//    @Enumerated(EnumType.STRING)
     @Column(name = "vaccine_type")
+    @Enumerated(EnumType.STRING)
     VaccineType vaccineType;
 
     @CreationTimestamp

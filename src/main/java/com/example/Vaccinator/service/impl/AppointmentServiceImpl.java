@@ -19,11 +19,15 @@ import com.example.Vaccinator.service.UserService;
 import com.example.Vaccinator.transformer.AppointmentTransformer;
 import com.example.Vaccinator.transformer.VaccinationCenterTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.net.UnknownServiceException;
 import java.util.Optional;
 import java.util.UUID;
+
+import static java.awt.SystemColor.text;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -42,6 +46,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
     AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private JavaMailSender emailSender;
 
     @Override
     public AppointmentResponseDto bookAppointment(AppointmentRequestDto appointmentRequestDto) throws DoctorNotFoundException, UserNotFoundException, Dose1NotTakenException {
@@ -82,9 +89,20 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         // add appointment to the doctor's appointment list
         doctor.getAppointments().add(appointment);
+        user.getAppointments().add(appointment);
 
         // add appointment to DB
         Appointment savedAppointment = appointmentRepository.save(appointment);
+
+        // send email
+
+        String text = "Congrats!!! " + user.getName() + " Your dose " + appointmentRequestDto.getDoseNo() + " has been booked.";
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("vaccinatorproject@gmail.com");
+        message.setTo(user.getEmailId());
+        message.setSubject("Appointment Booked!!!");
+        message.setText(text);
+        emailSender.send(message);
 
         AppointmentResponseDto appointmentResponseDto = AppointmentTransformer.AppointmentToAppointmentResponseDto(savedAppointment, user, doctor);
         appointmentResponseDto.setVaccineType(appointmentRequestDto.getVaccineType());
