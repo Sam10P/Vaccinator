@@ -40,6 +40,9 @@ public class AppointmentController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-
     }
+
+    // generate certificate
+    // - one dose
+    // - both dose
 }

@@ -6,9 +6,11 @@ import com.example.Vaccinator.dto.ResponseDTO.DoctorResponseDto;
 import com.example.Vaccinator.model.Doctor;
 import com.example.Vaccinator.model.VaccinationCenter;
 
+import java.util.List;
+
 public class DoctorTransformer {
 
-    public static Doctor DoctorRequestDtoToDoctor(DoctorRequestDto doctorRequestDto){
+    public static Doctor DoctorRequestDtoToDoctor(DoctorRequestDto doctorRequestDto) {
 
         return Doctor.builder()
                 .name(doctorRequestDto.getName())
@@ -19,7 +21,7 @@ public class DoctorTransformer {
                 .build();
     }
 
-    public static DoctorResponseDto DoctorToDoctorResponseDto(Doctor doctor){
+    public static DoctorResponseDto DoctorToDoctorResponseDto(Doctor doctor) {
 
         CenterResponseDto centerResponseDto = VaccinationCenterTransformer.CenterToCenterResponseDto(doctor.getVaccinationCenter());
 
@@ -32,3 +34,4 @@ public class DoctorTransformer {
     }
 
 }
+
