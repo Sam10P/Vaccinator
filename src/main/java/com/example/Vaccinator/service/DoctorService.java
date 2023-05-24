@@ -15,4 +15,8 @@ public interface DoctorService {
     public List<String> doctorMoreThan10Appointments();
 
     public List<String> maleAgeMoreThan40();
+
+    public String maleToFemaleRatio();
+
+    public String updateByEmailId(String emailId, String name);
 }

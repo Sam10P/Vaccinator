@@ -20,4 +20,9 @@ public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
     @Query(value = "SELECT * FROM doctor WHERE gender = 'MALE' AND age >= 40", nativeQuery = true)
     List<Doctor> maleAgeMoreThan40();
 
+    @Query(value = "SELECT COUNT(id) FROM doctor WHERE gender = :gender", nativeQuery = true)
+    int getDoctorByGender(String gender);
+
+    @Query(value = "SELECT * FROM doctor WHERE email_id = :emailId", nativeQuery = true)
+    Doctor findByEmailId(String emailId);
 }

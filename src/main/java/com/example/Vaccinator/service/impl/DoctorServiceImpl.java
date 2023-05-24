@@ -78,4 +78,26 @@ public class DoctorServiceImpl implements DoctorService {
         return ans;
     }
 
+    public String maleToFemaleRatio(){
+        int maleDoctors = doctorRepository.getDoctorByGender("MALE");
+        int femaleDoctors = doctorRepository.getDoctorByGender("FEMALE");
+
+        int percentOfMale = (100*maleDoctors)/(maleDoctors+femaleDoctors);
+        int percentOfFemale = (100*femaleDoctors)/(maleDoctors+femaleDoctors);
+
+        String ans = percentOfMale + "% are Male Doctors and " + percentOfFemale + "% are Female Doctors.";
+
+        return ans;
+    }
+
+    public String updateByEmailId(String emailId, String name){
+        
+        Doctor updateDoctor = doctorRepository.findByEmailId(emailId);
+        updateDoctor.setName(name);
+        Doctor savedDoctor = doctorRepository.save(updateDoctor);
+
+        String ans = "The name of doctor with ID " + savedDoctor.getId() + " and emailID " + savedDoctor.getEmailId() + " has been updated to " + savedDoctor.getName() + ".";
+        return ans;
+    }
+
 }

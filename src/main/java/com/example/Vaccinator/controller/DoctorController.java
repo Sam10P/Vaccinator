@@ -49,5 +49,15 @@ public class DoctorController {
     }
 
     // get the ratio of male to female doctors
+    @GetMapping("/male-to-female-ratio")
+    public ResponseEntity maleToFemaleRatio(){
+        String ans = doctorService.maleToFemaleRatio();
+        return new ResponseEntity(ans, HttpStatus.FOUND);
+    }
     // update the details based on email id of the doctor
+    @PutMapping("/update-by-email_id")
+    public ResponseEntity updateByEmailId(@RequestParam String emailId, @RequestParam String name){
+        String ans = doctorService.updateByEmailId(emailId, name);
+        return new ResponseEntity(ans, HttpStatus.ACCEPTED);
+    }
 }
